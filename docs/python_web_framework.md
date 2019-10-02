@@ -39,7 +39,25 @@ Apache HTTP Server和Nginx本身不支持生成动态页面，但它们可以通
 mod wsgi包实现了一个简单易用的Apache模块，它可以承载任何支持Python wsgi规范的Python web应用程序。根据您的需求，可以用两种不同的方式安装包。手动配置和自动配置。  
 
 # 模型和数据库  
-每一个模型都映射一张数据库表。  
+## 模型  
+每一个模型都映射一张数据库表。 
+### 我对模型对应表的理解  
+首先，看代码，如下：
+```python
+class Book(models.Model):
+    name = models.CharField(max_length=300)
+    pages = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    rating = models.FloatField()
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    pubdate = models.DateField()
+```
+实际上，这个models.py会在数据库中生成两张表。一张表是bookshop_book表，一张表是bookshop_book_authors表。因为，Book与Author的关系是多对多的关系，所以，根据范式要求，拆成两张表。
+### 在一个包中管理模型  
+用 models包 内写入多个 modles 文件，并且在```__init__.py```文件中说明。
+
+
 ## 执行查询  
 ### 检索对象  
 * 要从数据库检索对象，要通过模型类的 Manager 构建一个 QuerySet

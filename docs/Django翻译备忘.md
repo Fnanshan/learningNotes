@@ -28,3 +28,8 @@ F() 的实例充当查询字段的引用
 **change**
 F()的实例充当查询中的模型字段的引用  
 
+2019年10月2日19:50:04
+[所在网页](https://docs.djangoproject.com/zh-hans/2.2/topics/db/models/)
+manage.py startapp 命令创建了一个应用结构，包含一个 models.py 文件。若你有很多木星，用独立的文件管理它们会很实用。
+**change**
+manage.py startapp 命令创建了一个应用结构，包含一个 models.py 文件。若你有很多 modles ，用独立的文件管理它们会很实用。
