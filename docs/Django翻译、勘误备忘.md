@@ -43,10 +43,10 @@ manage.py startapp 命令创建了一个应用结构，包含一个 models.py �
 
 # Django勘误备忘  
 
-Time：2019年10月3日16:04:02  
-Version：Django version 2.2  
-Reference Link：[模型和数据库-聚合-output_field关键字参数](https://docs.djangoproject.com/zh-hans/2.2/topics/db/aggregation/)  
-Content：
+## Time：2019年10月3日16:04:02  
+* Version：Django version 2.2  
+* Reference Link：[模型和数据库-聚合-output_field关键字参数](https://docs.djangoproject.com/zh-hans/2.2/topics/db/aggregation/)  
+
 
 ```python
 # 定义Book模型这里，price属性的类型是DecimalField类型
@@ -71,3 +71,36 @@ Book.objects.aggregate(
 
 ```
 
+##Time：2019年10月7日14:10:42  
+* Version：Django version 2.2  
+* Reference Link：[模型和数据库-管理器-自定义管理器-基础管理器](https://docs.djangoproject.com/zh-hans/2.2/topics/db/managers/)  
+
+```text
+有一段话：
+在关联模型上执行查询时不会使用基础管理器。例如，若 来自教程 的模型 Question 有个 deleted 字段，还有一个基础管理器，用于筛选出 deleted=True 的实例。由 Choice.objects.filter(question__name__startswith='What') 返回的查询结果集会包含关联至已删除的问题的选项。
+
+其中，Choice.objects.filter(question__name__startswith='What')报错：
+raise FieldError('Related Field got invalid lookup {}'.format(lookups[0]))
+由教程前面所定义的模型来看，
+改成，Choice.objects.filter(question__question_text__startswith='What')
+```
+
+##Time：2019年10月7日14:50:47  
+* Version：Django version 2.2  
+* Reference Link：[模型和数据库-管理器-自定义管理器-管理器调用自定义 QuerySet 方法](https://docs.djangoproject.com/zh-hans/2.2/topics/db/managers/)  
+```python
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    role = models.CharField(max_length=1, choices=[('A', _('Author')), ('E', _('Editor'))])
+    people = PersonManager()
+'''其中choices=[('A', _('Author')), ('E', _('Editor'))]改成choices=[('A', ('Author')), ('E', ('Editor'))],因为模型字段的choices字段选项的格式为：
+YEAR_IN_SCHOOL_CHOICES = [
+    ('FR', 'Freshman'),
+    ('SO', 'Sophomore'),
+    ('JR', 'Junior'),
+    ('SR', 'Senior'),
+    ('GR', 'Graduate'),
+]
+'''
+```

@@ -65,4 +65,16 @@ class Book(models.Model):
 * 每个模型至少有一个 Manager，默认名称是 objects
 
 **为什么Managers 只能通过模型类访问，而不是通过模型实例？**  
-因为一个模型类是一张表，模型类执行“表级”操作，模型实例执行“行级”操作。目的是强制分离 “表级” 操作和 “行级” 操作。
+因为一个模型类是一张表，模型类执行“表级”操作，模型实例执行“行级”操作。目的是强制分离 “表级” 操作和 “行级” 操作。  
+
+## 管理器  
+### 自定义管理器  
+对于调用QuerySet，我有两种方法：
+* 管理器调用自定义 QuerySet 方法
+* 创建带有 QuerySet 方法的管理器
+
+面对第一种，仅适用于你在自定义 QuerySet 中定义了额外方法，且在 Manager 中实现了它们。需要注意的是，这时的Manager可以调用QuerySet的共有方法、私有方法。  
+面对第二种，不需要让Manager调用自定义QuerySet；而是people = PersonQuerySet.as_manager()，创建一个 Manager 实例，拷贝了自定义 QuerySet 的方法。但是，不是所有的QuerySet都被拷贝到Manager，  
+QuerySet共有方法可以，私有方法不可以拷贝；  
+opted_out_public_method.queryset_only = True 不可以拷贝；（选择退出公用方法 : True）  
+_opted_in_private_method.queryset_only = False 可以拷贝。（以私人方式选择 : False）  
