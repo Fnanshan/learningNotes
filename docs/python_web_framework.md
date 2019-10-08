@@ -78,3 +78,10 @@ class Book(models.Model):
 QuerySet共有方法可以，私有方法不可以拷贝；  
 opted_out_public_method.queryset_only = True 不可以拷贝；（选择退出公用方法 : True）  
 _opted_in_private_method.queryset_only = False 可以拷贝。（以私人方式选择 : False）  
+
+## 执行原生 SQL 查询  
+需要注意的是，执行原生SQL查询要避免SQL注入攻击。  
+* [名词解释-SQL注入保护](https://docs.djangoproject.com/zh-hans/2.2/topics/security/#sql-injection-protection)：  
+* [相关链接-SQL注入是什么？如何防止？](https://www.cnblogs.com/daofaziran/p/10933402.html)
+
+执行原生SQL查询，不能省略主键字段，
